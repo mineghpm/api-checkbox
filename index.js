@@ -15,11 +15,33 @@ async function layDuLieuChuDe() {
   }
 }
 
-// Sử dụng hàm để lấy dữ liệu về chủ đề từ API
+// Hàm để tạo checkbox cho từng chủ đề
+function taoCheckboxChuDe(chuDe) {
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.name = 'themes';
+  checkbox.value = chuDe.id;
+  
+  const label = document.createElement('label');
+  label.appendChild(document.createTextNode(chuDe.name));
+  
+  const container = document.createElement('div');
+  container.appendChild(checkbox);
+  container.appendChild(label);
+  
+  return container;
+}
+
+// Sử dụng hàm để lấy dữ liệu về chủ đề từ API và hiển thị chúng dưới dạng các checkbox
 (async () => {
   try {
     const duLieuChuDe = await layDuLieuChuDe();
-    console.log('Dữ liệu về chủ đề:', duLieuChuDe);
+    const containerChuDe = document.getElementById('container-themes');
+    
+    duLieuChuDe.forEach(chuDe => {
+      const checkbox = taoCheckboxChuDe(chuDe);
+      containerChuDe.appendChild(checkbox);
+    });
   } catch (error) {
     console.error('Đã xảy ra lỗi:', error);
   }
